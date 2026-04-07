@@ -3,7 +3,7 @@
 An interactive web application that simulates and visualizes **circular q-shift** on a 2D mesh topology.
 
 ## 🔗 Live Demo
-> **[ADD YOUR DEPLOYMENT URL HERE AFTER DEPLOYING]**
+> [https://glowing-toffee-fc6739.netlify.app](https://glowing-toffee-fc6739.netlify.app)
 
 ---
 
@@ -81,4 +81,4 @@ mesh-shift-visualizer/
 ## 🛠 Tech Stack
 
 - **Vanilla HTML + CSS + JavaScript** (ES6 modules, no framework needed)
-- **Deployed on:** Netlify / Vercel (free tier)
+- **Deployed on:** Netlify
