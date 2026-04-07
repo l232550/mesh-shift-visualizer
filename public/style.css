@@ -1,0 +1,490 @@
+/* ============================================================
+   style.css — Mesh Shift Visualizer Styles
+   ============================================================ */
+
+/* ── Google Font — just one simple font ─────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Nunito:wght@400;600;700&display=swap');
+
+/* ── CSS Variables ───────────────────────────────────────── */
+:root {
+  --bg:          #f0ece3;   /* warm off-white background */
+  --surface:     #faf7f2;   /* card/panel background */
+  --border:      #d6cfc4;   /* soft border */
+  --text:        #2e2b26;   /* dark brown-black text */
+  --muted:       #8a8278;   /* grey-brown secondary text */
+  --accent:      #5c7a5c;   /* muted green accent */
+  --accent2:     #b07d3e;   /* muted amber/brown accent */
+  --error:       #b94040;   /* soft red */
+  --green:       #4a7a4a;   /* success green */
+  --cell-bg:     #1e2d2e;   /* node cell — deep teal-dark */
+  --cell-s1:     #1a3a2a;   /* after stage 1 — deep green */
+  --cell-s2:     #2e2010;   /* after stage 2 — deep amber-brown */
+  --radius:      8px;
+}
+
+/* ── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+header {
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  padding: 22px 20px 14px;
+  text-align: center;
+}
+header h1 {
+  font-family: 'Courier Prime', monospace;
+  font-size: 1.6rem;
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+header p {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin-top: 5px;
+}
+
+/* ── App wrapper ─────────────────────────────────────────── */
+#app { padding: 20px; }
+
+/* ── Layout: sidebar + main ──────────────────────────────── */
+.layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 18px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ── Panel card ──────────────────────────────────────────── */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+.panel-title {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 14px;
+  border-bottom: 1px dashed var(--border);
+  padding-bottom: 8px;
+}
+
+/* ── Inputs ──────────────────────────────────────────────── */
+.input-group {
+  margin-bottom: 14px;
+}
+.input-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: var(--text);
+}
+.hint {
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-left: 5px;
+}
+.input-group input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 0.95rem;
+  padding: 9px 11px;
+  font-family: 'Courier Prime', monospace;
+  transition: border-color 0.2s;
+}
+.input-group input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* ── Error ───────────────────────────────────────────────── */
+.error-msg {
+  background: #fdeaea;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 6px;
+  padding: 7px 11px;
+  font-size: 0.82rem;
+  margin-bottom: 10px;
+}
+.hidden { display: none !important; }
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.button-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.btn {
+  padding: 9px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Nunito', sans-serif;
+  transition: background 0.15s, transform 0.1s;
+}
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  flex: 1;
+}
+.btn-primary:hover { background: #4a6b4a; }
+
+.btn-secondary {
+  background: var(--bg);
+  color: var(--text);
+}
+.btn-secondary:hover { background: var(--border); }
+
+.btn-sm {
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  background: #e4eefb !important;
+  color: #2a6fcc !important;
+  border-color: #c2d6f5 !important;
+}
+.btn-sm:hover {
+  background: #cfe0f7 !important;
+}
+
+.btn-play {
+  background: #fff4e5 !important;
+  color: #c96a00 !important;
+  border-color: #f0c080 !important;
+}
+.btn-play:hover {
+  background: #ffe0b2 !important;
+}
+
+/* ── Formula hint box ────────────────────────────────────── */
+.formula-box {
+  background: var(--bg);
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.9;
+  font-family: 'Courier Prime', monospace;
+}
+.formula-title {
+  color: var(--text);
+  font-weight: 700;
+  margin-bottom: 4px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem;
+}
+
+/* ── Stage tabs ──────────────────────────────────────────── */
+.stage-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.stage-tab {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  transition: all 0.25s;
+}
+.stage-tab.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ── Grid panel — light blue-tinted background ───────────── */
+/* The grid is the main attraction so it gets its own feel.  */
+/* Still light overall, but distinct from the warm sidebar.  */
+.mesh-panel {
+  background: #f0f6ff;          /* very light blue-white */
+  border: 1.5px solid #c2d6f5;
+}
+.mesh-panel .panel-title {
+  color: #2a6fcc;               /* strong blue title */
+  border-bottom-color: #c2d6f5;
+}
+
+/* ── Stage tabs inside grid panel ───────────────────────── */
+.mesh-panel .stage-tab {
+  background: #e4eefb;
+  border-color: #c2d6f5;
+  color: #6a90c0;
+}
+.mesh-panel .stage-tab.active {
+  background: #2a6fcc;
+  color: #fff;
+  border-color: #2a6fcc;
+}
+
+/* ── Grid container ──────────────────────────────────────── */
+.grid-container {
+  min-height: 180px;
+}
+
+/* ── Cell — default (initial) state ─────────────────────── */
+/* White card with a blue border + subtle shadow so it lifts */
+.grid-cell {
+  background: #ffffff;
+  border: 2px solid #90bbf0;
+  border-radius: 8px;
+  padding: 7px 5px;
+  text-align: center;
+  position: relative;
+  min-height: 68px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.35s, border-color 0.35s, box-shadow 0.35s;
+  box-shadow: 0 2px 8px rgba(42, 111, 204, 0.12);
+}
+.grid-cell:hover {
+  border-color: #2a6fcc;
+  box-shadow: 0 4px 14px rgba(42, 111, 204, 0.28);
+}
+
+/* ── Stage 1 cells — fresh green ────────────────────────── */
+.stage1-cell {
+  background: #edfaf2 !important;
+  border-color: #34c471 !important;
+  box-shadow: 0 2px 10px rgba(52, 196, 113, 0.3) !important;
+}
+
+/* ── Stage 2 cells — warm orange ────────────────────────── */
+.stage2-cell {
+  background: #fff7ed !important;
+  border-color: #f0900a !important;
+  box-shadow: 0 2px 10px rgba(240, 144, 10, 0.28) !important;
+}
+
+/* ── Text inside cells ───────────────────────────────────── */
+.cell-index {
+  font-size: 0.62rem;
+  color: #8aabcc;               /* soft blue-grey label */
+  font-family: 'Courier Prime', monospace;
+}
+.cell-data {
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: 'Courier Prime', monospace;
+  color: #1a5cb5;               /* vivid blue — the data value */
+  margin: 2px 0;
+}
+.stage1-cell .cell-data {
+  color: #1e9e52 !important;    /* vivid green after stage 1 */
+}
+.stage2-cell .cell-data {
+  color: #c96a00 !important;    /* vivid orange after stage 2 */
+}
+.cell-pos {
+  font-size: 0.58rem;
+  color: #aac0d8;
+  font-family: 'Courier Prime', monospace;
+}
+
+/* ── Arrows on cells ─────────────────────────────────────── */
+.cell-arrow {
+  position: absolute;
+  top: 3px;
+  right: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.row-arrow { color: #2a6fcc; }   /* blue  = row direction  */
+.col-arrow { color: #f0900a; }   /* orange = col direction */
+
+/* ── Cell pop-in animation ───────────────────────────────── */
+@keyframes cellEnter {
+  from { opacity: 0; transform: scale(0.75); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.cell-enter {
+  animation: cellEnter 0.22s ease both;
+}
+
+/* ── Anim controls + legend override for dark panel ─────── */
+.mesh-panel .anim-label { color: #8abcbc; }
+.mesh-panel .btn-sm     { background: #162228; color: #8abcbc; border-color: #1e3035; }
+.mesh-panel .btn-sm:hover { background: #1e3035; }
+.mesh-panel .legend-item  { color: #4a7a88; }
+
+/* ── Anim controls ───────────────────────────────────────── */
+.anim-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.anim-label {
+  flex: 1;
+  text-align: center;
+  font-size: 0.84rem;
+  color: var(--text);
+  font-family: 'Courier Prime', monospace;
+}
+
+/* ── Legend ──────────────────────────────────────────────── */
+.legend {
+  display: flex;
+  gap: 18px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.legend-item {
+  font-size: 0.78rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.arrow-demo {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+/* ── Complexity panel rows ───────────────────────────────── */
+.complexity-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 0.84rem;
+  border-bottom: 1px solid var(--border);
+}
+.complexity-row.total-row {
+  margin-top: 8px;
+  border-bottom: none;
+  font-weight: 700;
+}
+.complexity-row .label { color: var(--muted); }
+.complexity-row .value {
+  font-family: 'Courier Prime', monospace;
+  color: var(--text);
+}
+.complexity-row .highlight {
+  color: var(--green);
+  font-size: 1rem;
+}
+.complexity-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 8px 0;
+}
+
+/* ── Formula block ───────────────────────────────────────── */
+.formula-block { margin: 8px 0; }
+.formula-line {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 5px;
+  font-size: 0.76rem;
+  font-family: 'Courier Prime', monospace;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+.formula-tag {
+  font-size: 0.66rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.mesh-tag { background: var(--accent);  color: #fff; }
+.ring-tag { background: var(--error);   color: #fff; }
+
+/* ── Bar chart ───────────────────────────────────────────── */
+.bar-chart { margin: 10px 0; }
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+.bar-label {
+  width: 36px;
+  font-size: 0.73rem;
+  color: var(--muted);
+  font-family: 'Courier Prime', monospace;
+  flex-shrink: 0;
+}
+.bar-track {
+  flex: 1;
+  background: var(--bg);
+  border-radius: 4px;
+  height: 22px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  padding-left: 6px;
+  transition: width 0.5s ease;
+  min-width: 26px;
+}
+.mesh-bar { background: var(--accent); }
+.ring-bar { background: var(--error); }
+.bar-num {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: 'Courier Prime', monospace;
+}
+
+/* ── Verdict ─────────────────────────────────────────────── */
+.verdict {
+  background: #edf4ed;
+  border: 1px solid #9dbf9d;
+  border-radius: 6px;
+  padding: 7px 11px;
+  font-size: 0.81rem;
+  color: var(--green);
+  margin: 8px 0;
+  text-align: center;
+}
+
+/* ── Utility ─────────────────────────────────────────────── */
+.muted  { color: var(--muted); font-size: 0.88rem; }
+.center { text-align: center; margin-top: 18px; }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+  header h1 { font-size: 1.2rem; }
+}
