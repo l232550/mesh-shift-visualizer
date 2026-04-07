@@ -1,0 +1,6 @@
+# Netlify deployment config
+# Tell Netlify: the root of the site is the project root (not /public)
+# so that ../style.css and ../src/... paths resolve correctly
+
+[build]
+  publish = "."
